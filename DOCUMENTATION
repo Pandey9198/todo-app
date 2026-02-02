@@ -1,0 +1,267 @@
+# Django ToDo Application Documentation
+
+## Overview
+This is a Django-based ToDo list application that allows users to manage tasks with different statuses (Pending, In Progress, Completed). The application provides a clean web interface for creating, viewing, updating, and deleting tasks.
+
+---
+
+## Project Structure
+
+```
+todo_project/
+├── manage.py                 # Django management script
+├── db.sqlite3               # SQLite database file
+├── todo/                     # Main application
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py            # Task model definition
+│   ├── tests.py
+│   ├── urls.py              # App URL routing
+│   ├── views.py             # View functions
+│   ├── migrations/          # Database migrations
+│   └── templates/todo/      # HTML templates
+│       ├── task_list.html
+│       └── task_detail.html
+└── todo_project/            # Project configuration
+    ├── __init__.py
+    ├── settings.py          # Django settings
+    ├── urls.py              # Root URL routing
+    ├── wsgi.py              # WSGI configuration
+    └── asgi.py              # ASGI configuration
+```
+
+---
+
+## Features
+
+### Task Management
+- **Create Tasks**: Add new tasks with a title
+- **View Tasks**: View all tasks or individual task details
+- **Update Status**: Change task status between:
+  - Pending (default)
+  - In Progress
+  - Completed
+- **Delete Tasks**: Remove tasks from the list
+
+### Status Workflow
+```
+PENDING → IN_PROGRESS → COMPLETED
+   ↑                      ↓
+   ←────── BACKWARDS ─────┘
+```
+
+Users can move tasks forward or backward in the workflow at any time.
+
+---
+
+## Technology Stack
+
+| Component | Technology |
+|-----------|------------|
+| Backend Framework | Django 4.2.7 |
+| Database | SQLite3 |
+| Web Server | Django Development Server |
+| Frontend | HTML5 + CSS3 |
+| Template Engine | Django Templates |
+
+---
+
+## Installation & Setup
+
+### Prerequisites
+- Python 3.8+
+- Django 4.2.7+
+
+### Setup Instructions
+
+1. **Navigate to the project directory**:
+   ```bash
+   cd /home/oem/Desktop/todo_project
+   ```
+
+2. **Apply database migrations**:
+   ```bash
+   python manage.py migrate
+   ```
+
+3. **Start the development server**:
+   ```bash
+   python manage.py runserver
+   ```
+
+4. **Access the application**:
+   Open your browser and navigate to: `http://127.0.0.1:8000`
+
+---
+
+## URL Endpoints
+
+| URL Pattern | View Function | Description |
+|-------------|---------------|-------------|
+| `/` | `task_list` | Display all tasks grouped by status |
+| `/in-progress/<task_id>/` | `set_in_progress` | Mark task as in progress |
+| `/pending/<task_id>/` | `set_pending` | Mark task as pending |
+| `/done/<task_id>/` | `mark_done` | Mark task as completed |
+| `/task/<task_id>/` | `view_task` | View task details |
+| `/delete/<task_id>/` | `delete_task` | Delete a task |
+| `/admin/` | Django Admin | Admin interface |
+
+---
+
+## Data Model
+
+### Task Model
+Located in: `todo/models.py`
+
+| Field | Type | Options | Description |
+|-------|------|---------|-------------|
+| `id` | AutoField | Primary Key | Unique task identifier |
+| `title` | CharField | max_length=200 | Task title/name |
+| `status` | CharField | choices, default='PENDING' | Current status |
+| `created_at` | DateTimeField | auto_now_add=True | Creation timestamp |
+| `updated_at` | DateTimeField | auto_now=True | Last update timestamp |
+
+### Status Choices
+```python
+STATUS_CHOICES = [
+    ('PENDING', 'Pending'),
+    ('IN_PROGRESS', 'In Progress'),
+    ('COMPLETED', 'Completed'),
+]
+```
+
+---
+
+## Views Description
+
+### `task_list(request)`
+- **Method**: GET/POST
+- **Function**: 
+  - GET: Displays all tasks grouped by status
+  - POST: Creates a new task from form submission
+
+### `set_in_progress(request, task_id)`
+- Changes task status to 'IN_PROGRESS'
+- Redirects to task list
+
+### `set_pending(request, task_id)`
+- Changes task status to 'PENDING'
+- Redirects to task list
+
+### `mark_done(request, task_id)`
+- Changes task status to 'COMPLETED'
+- Redirects to task list
+
+### `view_task(request, task_id)`
+- Displays detailed information about a single task
+- Shows title, status, creation date, and last update date
+- Provides action buttons for status changes
+
+### `delete_task(request, task_id)`
+- Deletes the specified task from the database
+- Redirects to task list with confirmation
+
+---
+
+## Templates
+
+### `task_list.html`
+Main dashboard displaying:
+- Task creation form
+- Pending tasks section
+- In Progress tasks section
+- Completed tasks section
+
+### `task_detail.html`
+Single task view showing:
+- Task title
+- Current status (with visual badge)
+- Creation timestamp
+- Last update timestamp
+- Action buttons for status changes
+
+---
+
+## Django Settings
+
+### Key Configuration
+- **Debug Mode**: Enabled (`DEBUG = True`)
+- **Allowed Hosts**: Empty (for development)
+- **Database**: SQLite3 at `BASE_DIR / 'db.sqlite3'`
+- **Time Zone**: UTC
+- **Language**: English (US)
+
+### Installed Apps
+- django.contrib.admin
+- django.contrib.auth
+- django.contrib.contenttypes
+- django.contrib.sessions
+- django.contrib.messages
+- django.contrib.staticfiles
+- todo (custom app)
+
+---
+
+## Database Schema
+
+### Tasks Table
+```sql
+CREATE TABLE todo_task (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(200) NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL
+);
+```
+
+---
+
+## Development Commands
+
+| Command | Description |
+|---------|-------------|
+| `python manage.py runserver` | Start development server |
+| `python manage.py makemigrations` | Create new migrations |
+| `python manage.py migrate` | Apply database migrations |
+| `python manage.py createsuperuser` | Create admin user |
+| `python manage.py shell` | Open Django shell |
+| `python manage.py test` | Run tests |
+
+---
+
+## Security Considerations
+
+- CSRF protection enabled
+- SQL injection protection via Django ORM
+- XSS protection via template engine
+- Clickjacking protection enabled
+
+**Note**: This is a development configuration. For production:
+- Set `DEBUG = False`
+- Configure proper `ALLOWED_HOSTS`
+- Use a production database (PostgreSQL, MySQL)
+- Set strong `SECRET_KEY`
+
+---
+
+## Future Improvements
+
+Potential enhancements for this application:
+- User authentication and user-specific task lists
+- Task categories or labels
+- Due dates and reminders
+- Priority levels
+- Task search and filtering
+- REST API endpoints
+- Unit and integration tests
+- Mobile-responsive design improvements
+
+---
+
+## License
+
+This project is open-source and available for educational and development purposes.
+
+mai chahta hu ki mere isi project me kai sale user apne task kre login logout krke forget password ka bhi option hona chahiye 

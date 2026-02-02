@@ -15,9 +15,34 @@
         .action-btns a:hover { background: #2980b9; }
         .delete-btn { background: #e74c3c !important; }
         .delete-btn:hover { background: #c0392b !important; }
+        
+        /* Auth bar styles */
+        .auth-bar { background: #333; color: white; padding: 10px 20px; margin: -20px -20px 20px -20px; display: flex; justify-content: space-between; align-items: center; }
+        .auth-bar a { color: white; text-decoration: none; margin-left: 15px; }
+        .auth-bar a:hover { text-decoration: underline; }
+        .user-info { font-weight: bold; }
     </style>
 </head>
 <body>
+
+<div class="auth-bar">
+    <div class="user-info">
+        {% if user.is_authenticated %}
+            👤 {{ user.username }}
+        {% else %}
+            👤 Guest User
+        {% endif %}
+    </div>
+    <div class="auth-links">
+        {% if user.is_authenticated %}
+            <a href="{% url 'task_list' %}">📋 My Tasks</a>
+            <a href="{% url 'user_logout' %}">🚪 Logout</a>
+        {% else %}
+            <a href="{% url 'user_login' %}">🔐 Login</a>
+            <a href="{% url 'user_register' %}">📝 Register</a>
+        {% endif %}
+    </div>
+</div>
 
 <h1>{{ task.title }}</h1>
 

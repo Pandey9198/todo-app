@@ -1,0 +1,56 @@
+# User Authentication Implementation - TODO List
+
+## Step 1: Update Task Model (todo/models.py)
+- [ ] Add ForeignKey to User model
+- [ ] Make title unique per user
+- [ ] Add related_name for reverse lookup
+
+## Step 2: Create Authentication Forms (todo/forms.py)
+- [ ] Create UserRegistrationForm
+- [ ] Create UserLoginForm
+- [ ] Create PasswordResetForm
+- [ ] Create SetPasswordForm
+
+## Step 3: Create Authentication Views (todo/views.py)
+- [ ] user_register view
+- [ ] user_login view
+- [ ] user_logout view
+- [ ] password_reset_request view
+- [ ] password_reset_done view
+- [ ] password_reset_confirm view
+- [ ] password_reset_complete view
+- [ ] Update task_list view (filter by user)
+- [ ] Update other task views (require login)
+
+## Step 4: Create Authentication URLs (todo/urls.py)
+- [ ] Add authentication URL patterns
+- [ ] Include Django auth URLs
+
+## Step 5: Create Authentication Templates
+- [ ] login.html
+- [ ] register.html
+- [ ] password_reset_form.html
+- [ ] password_reset_done.html
+- [ ] password_reset_confirm.html
+- [ ] password_reset_complete.html
+
+## Step 6: Update Settings (todo_project/settings.py)
+- [ ] Add login redirect URLs
+- [ ] Configure email backend
+- [ ] Add email settings for development
+
+## Step 7: Update Existing Templates
+- [ ] Update task_list.html with auth links
+- [ ] Update task_detail.html with auth links
+
+## Step 8: Database Migration
+- [ ] Generate migrations
+- [ ] Apply migrations
+
+## Step 9: Testing
+- [ ] Test user registration
+- [ ] Test user login
+- [ ] Test user logout
+- [ ] Test password reset
+- [ ] Verify user-specific tasks
+
