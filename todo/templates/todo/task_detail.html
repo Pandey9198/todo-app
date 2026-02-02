@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Detail - ToDo App</title>
+</head>
+<body>
+
+<h2>Task Details</h2>
+
+<p><strong>Title:</strong> {{ task.title }}</p>
+<p><strong>Status:</strong> {% if task.completed %}Completed{% else %}Pending{% endif %}</p>
+
+<a href="{% url 'task_list' %}">Back to List</a>
+<a href="{% url 'mark_done' task.id %}">Mark as Done</a>
+<a href="{% url 'delete_task' task.id %}" onclick="return confirm('Are you sure?')">Delete Task</a>
+
+</body>
+</html>

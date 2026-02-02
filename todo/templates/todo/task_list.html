@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ToDo App</title>
+</head>
+<body>
+
+<h2>My ToDo List</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Enter task" required>
+    <button type="submit">Add</button>
+</form>
+
+<ul>
+    {% for task in tasks %}
+        <li>
+            {% if task.completed %}
+                <strike>{{ task.title }}</strike>
+            {% else %}
+                {{ task.title }}
+            {% endif %}
+            <a href="{% url 'view_task' task.id %}">View</a>
+            <a href="{% url 'mark_done' task.id %}">Done</a>
+            <a href="{% url 'delete_task' task.id %}" onclick="return confirm('Are you sure?')">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
