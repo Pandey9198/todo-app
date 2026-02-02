@@ -10,9 +10,21 @@ def task_list(request):
 
     return render(request, "todo/task_list.html", {"tasks": tasks})
 
+def set_in_progress(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    task.status = 'IN_PROGRESS'
+    task.save()
+    return redirect("/")
+
+def set_pending(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    task.status = 'PENDING'
+    task.save()
+    return redirect("/")
+
 def mark_done(request, task_id):
-    task = Task.objects.get(id=task_id)
-    task.completed = True
+    task = get_object_or_404(Task, id=task_id)
+    task.status = 'COMPLETED'
     task.save()
     return redirect("/")
 
