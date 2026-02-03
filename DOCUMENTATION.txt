@@ -227,7 +227,7 @@ CREATE TABLE todo_task (
 | `python manage.py migrate` | Apply database migrations |
 | `python manage.py createsuperuser` | Create admin user |
 | `python manage.py shell` | Open Django shell |
-| `python manage.py test` | Run tests |
+| `python manage.py test` | Run tests | 
 
 ---
 
@@ -252,8 +252,8 @@ Potential enhancements for this application:
 - User authentication and user-specific task lists
 - Task categories or labels
 - Due dates and reminders
-- Priority levels
-- Task search and filtering
+- Priority levels 
+- Task search and filtering 
 - REST API endpoints
 - Unit and integration tests
 - Mobile-responsive design improvements
@@ -263,5 +263,3 @@ Potential enhancements for this application:
 ## License
 
 This project is open-source and available for educational and development purposes.
-
-mai chahta hu ki mere isi project me kai sale user apne task kre login logout krke forget password ka bhi option hona chahiye 

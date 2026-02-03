@@ -12,10 +12,10 @@ def task_list(request):
     tasks = Task.objects.filter(user=request.user)
 
     if request.method == "POST":
-        title = request.POST.get("title")
+        title = request.POST.get("title") 
         if title.strip():
-            Task.objects.create(user=request.user, title=title)
-            messages.success(request, 'Task added successfully!')
+            Task.objects.create(user=request.user, title=title) 
+            messages.success(request, 'Task added successfully!') 
 
     return render(request, "todo/task_list.html", {"tasks": tasks})
 
